@@ -4,6 +4,7 @@ import User from "../user/user.model.js";
 import { comparePassword, generateToken, hashPassword } from "./auth.utils.js";
 
 export const loginService = async (email, password, remember) => {
+  email = email.toLowerCase();
   const user = await User.findOne({ email });
   if (!user) {
     throwError(400, "Thông tin đăng nhập không chính xác");
@@ -26,6 +27,7 @@ export const loginService = async (email, password, remember) => {
 };
 
 export const requestRegisterService = async (email, name) => {
+  email = email.toLowerCase();
   const existEmail = await User.findOne({ email });
   if (existEmail) throwError(400, "Email đã tồn tại trong hệ thống");
   const password = await hashPassword("xedovietnam");
